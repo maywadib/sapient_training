@@ -3,6 +3,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="CoffeeMachine-master/CoffeeMachine/src"/>
 	<classpathentry kind="lib" path="C:/Users/maywadib/Desktop/Mayur/jars/mysql-connector-java-8.0.11.jar"/>
-	<classpathentry kind="lib" path="C:/Users/maywadib/Desktop/Mayur/jars/log4j-1.2.15.jar/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/maywadib/Desktop/Mayur/jars/jar_files/log4j-api-2.8.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

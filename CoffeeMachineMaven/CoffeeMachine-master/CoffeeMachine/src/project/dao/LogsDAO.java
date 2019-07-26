@@ -2,8 +2,6 @@ package project.dao;
 
 import java.sql.SQLException;
 
-import project.beans.Coffee;
-import project.beans.Employee;
 import project.connections.GetConnection;
 import project.standards.IlogsDAO;
 
@@ -25,7 +23,4 @@ public class LogsDAO implements IlogsDAO{
 		return false;
 	}
 
-	
-	
-	
 }

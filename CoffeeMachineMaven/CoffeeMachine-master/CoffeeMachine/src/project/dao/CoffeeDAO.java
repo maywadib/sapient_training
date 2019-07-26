@@ -13,14 +13,14 @@ public class CoffeeDAO implements ICoffeeDAO {
 	public boolean insertCoffee(Coffee coffee) {
 		String sql = "insert into coffee values (?,?,?,?)";
 		GetConnection gc = new GetConnection();
-
+		
 		try {
 			gc.ps1 = GetConnection.getMySqlConnection().prepareStatement(sql);
-			gc.ps1.setInt(1, coffee.getCoffeeId());
-			gc.ps1.setString(2, coffee.getCoffeeName());
-			gc.ps1.setDouble(3, coffee.getMilkPercent());
-			gc.ps1.setDouble(4, coffee.getCoffeePercent());
-			return gc.ps1.executeUpdate() > 0;
+			gc.ps1.setInt(1,coffee.getCoffeeId());
+			gc.ps1.setString(2,coffee.getCoffeeName());
+			gc.ps1.setDouble(3,coffee.getMilkPercent());
+			gc.ps1.setDouble(4,coffee.getCoffeePercent());
+			return gc.ps1.executeUpdate()>0;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -31,16 +31,16 @@ public class CoffeeDAO implements ICoffeeDAO {
 
 	@Override
 	public Coffee getCoffeeType(int coffeeId) {
-
+		
 		String sql = "select coffeeId, coffeeName, milkPercent, coffeePercent from coffee where coffeeId=?";
 		GetConnection gc = new GetConnection();
-
+		
 		try {
 			gc.ps1 = GetConnection.getMySqlConnection().prepareStatement(sql);
 			gc.ps1.setInt(1, coffeeId);
 			gc.rs1 = gc.ps1.executeQuery();
-
-			if (gc.rs1.next()) {
+			
+			if(gc.rs1.next()) {
 				Coffee c = new Coffee();
 				c.setCoffeeId(gc.rs1.getInt("coffeeId"));
 				c.setCoffeeName(gc.rs1.getString("coffeeName"));
@@ -48,64 +48,48 @@ public class CoffeeDAO implements ICoffeeDAO {
 				c.setCoffeePercent(gc.rs1.getDouble("coffeePercent"));
 				return c;
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch(SQLException e) {
+			e.printStackTrace(); 
 		}
-
+		
 		return null;
 	}
 
 	@Override
 	public Coffee getPopularCoffee() {
-
-		String sql = "select coffeeId from coffeeconsumption group by coffeeId order by count(empId) desc limit 1";
-
+		int popularCoffeeId = 0;
+		String sql = "select coffeeId from log ......"; //re-factor this
 		GetConnection gc = new GetConnection();
-
+		Coffee popularCoffee = null;
 		try {
 			gc.ps1 = GetConnection.getMySqlConnection().prepareStatement(sql);
-
 			gc.rs1 = gc.ps1.executeQuery();
-
-			if (gc.rs1.next()) {
-				int coffeeId = gc.rs1.getInt(1);
-
-				return new CoffeeDAO().getCoffeeType(coffeeId);
-
-			}
+			popularCoffeeId = 0; //re-factor this
+			popularCoffee = getCoffeeType(popularCoffeeId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		return null;
-
+		 
+		return popularCoffee;
 	}
 
 	@Override
 	public Coffee getFavoriteCoffee(String employeeId) {
 		int favoriteCoffeeId = 0;
-		String sql = "select coffeeId from coffeeconsumption where empId = ? group by coffeeId order by count(coffeeId) desc limit 1"; // re-factor this
+		String sql = "select coffeeId from log where empId=employeeId ......"; //re-factor this
 		GetConnection gc = new GetConnection();
 		Coffee favoriteCoffee = null;
-
+		
 		try {
 			gc.ps1 = GetConnection.getMySqlConnection().prepareStatement(sql);
-			gc.ps1.setString(1, employeeId);
-			
 			gc.rs1 = gc.ps1.executeQuery();
-			
-			if (gc.rs1.next()) {
-				int coffeeId = gc.rs1.getInt(1);
-
-				return new CoffeeDAO().getCoffeeType(coffeeId);
-
-			}
+			favoriteCoffeeId = 0; //re-factor this
+			favoriteCoffee = getCoffeeType(favoriteCoffeeId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
-		return null;
+		 
+		return favoriteCoffee;
 	}
 
 }
